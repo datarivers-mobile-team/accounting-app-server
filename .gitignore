@@ -4,3 +4,8 @@
 
 /.vs
 /Backend/Accounting/.vs/Accounting/v17
+/Backend/Accounting/.vs
+/Backend/Accounting/Accounting.Model/bin/Debug/net6.0
+/Backend/Accounting/Accounting.Model/obj
+/Backend/Accounting/Accounting.WebApi/bin/Debug/net6.0
+/Backend/Accounting/Accounting.WebApi/obj
