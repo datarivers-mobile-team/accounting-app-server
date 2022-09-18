@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.Model", "Account
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.WebApi", "Accounting.WebApi\Accounting.WebApi.csproj", "{9090F267-3CE4-462C-8B17-30BF35B16CF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.DAL", "Accounting.DAL\Accounting.DAL.csproj", "{B834BFB2-A92C-41B7-9D0B-DAE2738557C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.DAL", "Accounting.DAL\Accounting.DAL.csproj", "{B834BFB2-A92C-41B7-9D0B-DAE2738557C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.BLL", "Accounting.BLL\Accounting.BLL.csproj", "{FB35F81B-B42B-403C-B0F8-7D21D18953FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.BLL", "Accounting.BLL\Accounting.BLL.csproj", "{FB35F81B-B42B-403C-B0F8-7D21D18953FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

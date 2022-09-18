@@ -9,3 +9,8 @@
 /Backend/Accounting/Accounting.Model/obj
 /Backend/Accounting/Accounting.WebApi/bin/Debug/net6.0
 /Backend/Accounting/Accounting.WebApi/obj
+/Backend/Accounting/Accounting.BLL/bin/Debug/net6.0
+/Backend/Accounting/Accounting.BLL/obj
+/Backend/Accounting/Accounting.DAL/bin/Debug/net6.0
+/Backend/Accounting/Accounting.DAL/obj
+/Backend/Accounting/Accounting.BLL.Tests/obj

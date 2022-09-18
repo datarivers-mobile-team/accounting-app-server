@@ -1,6 +1,7 @@
 ﻿using Accounting.BLL.Users.Interfaces;
 using Accounting.Model.Users.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 
 namespace Accounting.WebApi.Controllers;
 
@@ -10,12 +11,12 @@ namespace Accounting.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RegisterController : ControllerBase
+public class AccountController : ControllerBase
 {
-    private readonly ILogger<RegisterController> _logger;
-    private readonly IUser _user;
+    private readonly ILogger<AccountController> _logger;
+    private readonly IAccount _user;
 
-    public RegisterController(ILogger<RegisterController> logger,IUser user)
+    public AccountController(ILogger<AccountController> logger, IAccount user)
     {
         _logger = logger;
         _user = user;
@@ -26,7 +27,7 @@ public class RegisterController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> RegisterUser()
+    public IActionResult RegisterUser()
     {
         return Ok("Registration is Succeed!");
     }
@@ -36,8 +37,8 @@ public class RegisterController : ControllerBase
     /// </summary>
     /// <param name="register">user information for registration</param>
     /// <returns></returns>
+    [Route("register")]
     [HttpPost]
-    [AutoValidateAntiforgeryToken]    
     public async Task<IActionResult> RegisterUser(RegisterDto register)
     {
         if (!ModelState.IsValid) return BadRequest();
@@ -45,5 +46,24 @@ public class RegisterController : ControllerBase
         await _user.RegisterAsync(register);
 
         return Ok();
+    }
+
+    /// <summary>
+    /// Login users
+    /// </summary>
+    /// <param name="cellPhoneNumber">cell phone number for login</param>
+    /// <returns></returns>
+    [Route("login")]
+    [HttpPost]
+    public async Task<IActionResult> Login(string cellPhoneNumber)
+    {
+        if (!ModelState.IsValid) return BadRequest();
+
+        bool isLogin = await _user.Login(cellPhoneNumber);
+
+        if (isLogin)
+            return Ok();
+
+        return Unauthorized();
     }
 }
