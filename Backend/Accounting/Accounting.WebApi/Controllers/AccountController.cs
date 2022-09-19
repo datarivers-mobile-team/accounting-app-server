@@ -27,6 +27,7 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Route("test-api")]
     public IActionResult RegisterUser()
     {
         return Ok("Registration is Succeed!");
@@ -65,5 +66,16 @@ public class AccountController : ControllerBase
             return Ok();
 
         return Unauthorized();
+    }
+
+    [Route("remove")]
+    [HttpPost]
+    public async Task<IActionResult> Remove(int userId)
+    {
+        if (!ModelState.IsValid) return BadRequest();   
+
+        bool isDeleted = await _user.Remove(userId);
+
+        return isDeleted == true ? Ok() : NotFound(userId);
     }
 }

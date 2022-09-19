@@ -7,4 +7,6 @@ public interface IAccount
     Task RegisterAsync(RegisterDto user);
 
     Task<bool> Login(string cellPhoneNumber);
+
+    Task<bool> Remove(int userId);
 }

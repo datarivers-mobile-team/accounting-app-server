@@ -20,7 +20,9 @@ public class UserAccount : BaseApplicationService, IAccount
             FullName = register.FullName,
             PhoneNumber = register.PhoneNumber,
             PreferredCurrency = register.PreferredCurrency,
-            RefCode = register.RefCode
+            RefCode = register.RefCode,
+            CreatedAt = DateTime.Now,
+            Isdeleted = false
         };
 
         await _accountingDbContext.Users.AddAsync(user);
@@ -33,5 +35,21 @@ public class UserAccount : BaseApplicationService, IAccount
            SingleOrDefaultAsync(u => u.PhoneNumber.Equals(cellPhoneNumber));
 
         return user != null;
+    }
+
+    public async Task<bool> Remove(int userId)
+    {
+        User? deletingUser = await _accountingDbContext.Users.SingleOrDefaultAsync
+            (u => u.UserId.Equals(userId));
+
+        if (deletingUser == null)
+        {
+            return false;
+        }
+
+        deletingUser.Isdeleted = true;
+        await _accountingDbContext.SaveChangesAsync();
+
+        return true;
     }
 }

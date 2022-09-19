@@ -12,4 +12,6 @@ public class User
     public int? PreferredCurrency { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public bool? Isdeleted { get; set; }
 }
