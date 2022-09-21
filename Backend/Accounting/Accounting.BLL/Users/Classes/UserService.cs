@@ -7,9 +7,9 @@ using Accounting.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.BLL.Users.Classes;
-public class UserAccount : BaseApplicationService, IAccount
+public class UserService : BaseApplicationService, IUserService
 {
-    public UserAccount(AccountingDbContext accountingDbContext)
+    public UserService(AccountingDbContext accountingDbContext)
         : base(accountingDbContext)
     {
     }
@@ -59,5 +59,10 @@ public class UserAccount : BaseApplicationService, IAccount
         await _accountingDbContext.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task<List<User>> GetUsersAsync()
+    {
+        return await _accountingDbContext.Users.ToListAsync();
     }
 }

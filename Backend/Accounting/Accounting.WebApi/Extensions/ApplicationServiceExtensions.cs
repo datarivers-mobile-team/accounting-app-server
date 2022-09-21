@@ -12,7 +12,7 @@ public static class ApplicationServiceExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
         services.AddDbContext<AccountingDbContext>(c => c.UseSqlServer(config.GetConnectionString("TestDbConnection")));
-        services.AddTransient<IAccount, UserAccount>();
+        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IOtpService, OtpService>();
         return services;
     }

@@ -11,12 +11,12 @@ namespace Accounting.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountController : ControllerBase
+public class UserController : ControllerBase
 {
-    private readonly ILogger<AccountController> _logger;
-    private readonly IAccount _user;
+    private readonly ILogger<UserController> _logger;
+    private readonly IUserService _user;
 
-    public AccountController(ILogger<AccountController> logger, IAccount user)
+    public UserController(ILogger<UserController> logger, IUserService user)
     {
         _logger = logger;
         _user = user;
@@ -77,5 +77,14 @@ public class AccountController : ControllerBase
         bool isDeleted = await _user.Remove(userId);
 
         return isDeleted == true ? Ok() : NotFound(userId);
+    }
+
+    [HttpGet]
+    [Route("getUser")]
+    public async Task<IActionResult> GetUsers()
+    {
+        if (!ModelState.IsValid) return BadRequest();
+
+        return Ok(await _user.GetUsersAsync());
     }
 }
