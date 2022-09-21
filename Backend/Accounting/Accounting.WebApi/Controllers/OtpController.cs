@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Accounting.BLL.Otp.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Accounting.WebApi.Controllers;
 
@@ -10,19 +11,24 @@ namespace Accounting.WebApi.Controllers;
 [ApiController]
 public class OtpController : ControllerBase
 {
-    [HttpGet]
-    [Route("optCode")]
-    public async Task<IActionResult> GenerateOtpCode(string cellPhoneNumber)
+    private readonly IOtpService _otpService;
+
+    public OtpController(IOtpService otpService)
     {
-        //TODO : create a randome opt id
-        return Ok();
+        _otpService = otpService;
     }
 
     [HttpPost]
     [Route("getOptCode")]
     public async Task<IActionResult> GetOtpCode(string cellPhoneNumber)
     {
-        //TODO : find otp code for send cell phone number
-        return Ok();
+        string otp = await _otpService.GetOtpCodeAsync(cellPhoneNumber);
+
+        if (otp == null)
+        {
+            return NotFound(cellPhoneNumber);
+        }
+
+        return Ok(otp);
     }
 }

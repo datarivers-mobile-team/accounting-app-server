@@ -1,4 +1,5 @@
-﻿namespace Accounting.Model.Users.Entities;
+﻿
+namespace Accounting.Model.Users.Entities;
 public class User
 {
     public int UserId { get; set; }
@@ -14,4 +15,6 @@ public class User
     public DateTime CreatedAt { get; set; }
 
     public bool? Isdeleted { get; set; }
+
+    public virtual UserToken.Entities.UserToken UserToken { get; set; }
 }

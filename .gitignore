@@ -14,3 +14,5 @@
 /Backend/Accounting/Accounting.BLL/obj
 /Backend/Accounting/Accounting.DAL/bin/Debug/net6.0
 /Backend/Accounting/Accounting.DAL/obj
+/Backend/Accounting/Accounting.Utils/bin/Debug/net6.0
+/Backend/Accounting/Accounting.Utils/obj

@@ -10,5 +10,6 @@ public class UserConfig : IEntityTypeConfiguration<User>
         builder.Property(u => u.FullName).HasMaxLength(150);
         builder.Property(u => u.PhoneNumber).HasMaxLength(15);
         builder.Property(u => u.RefCode).HasMaxLength(20);
+        builder.HasOne(t=>t.UserToken).WithOne(u=>u.User).HasForeignKey<Model.UserToken.Entities.UserToken>(t=>t.UserId);
     }
 }

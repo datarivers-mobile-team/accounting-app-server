@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Accounting.DAL\Accounting.DAL.csproj" />
-    <ProjectReference Include="..\Accounting.Utils\Accounting.Utils.csproj" />
-  </ItemGroup>
-
 </Project>

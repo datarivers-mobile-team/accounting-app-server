@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.DAL", "Accountin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.BLL", "Accounting.BLL\Accounting.BLL.csproj", "{FB35F81B-B42B-403C-B0F8-7D21D18953FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.Utils", "Accounting.Utils\Accounting.Utils.csproj", "{B415D267-4AEC-41FF-8C43-9626657B7409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FB35F81B-B42B-403C-B0F8-7D21D18953FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB35F81B-B42B-403C-B0F8-7D21D18953FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB35F81B-B42B-403C-B0F8-7D21D18953FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B415D267-4AEC-41FF-8C43-9626657B7409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B415D267-4AEC-41FF-8C43-9626657B7409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B415D267-4AEC-41FF-8C43-9626657B7409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B415D267-4AEC-41FF-8C43-9626657B7409}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

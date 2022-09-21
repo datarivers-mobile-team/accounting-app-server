@@ -1,15 +1,27 @@
-﻿using Accounting.BLL.Otp.Interfaces;
+﻿using Accounting.BLL.Framework;
+using Accounting.BLL.Otp.Interfaces;
+using Accounting.DAL.DataContext;
+using Accounting.Model.Users.Entities;
+using Accounting.Model.UserToken.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.BLL.Otp.Classes;
-public class OtpService : IOtpService
+public class OtpService : BaseApplicationService,IOtpService
 {
-    public void Generate(string cellPhoneNumber)
+    public OtpService(AccountingDbContext accountingDbContext)
+        :base(accountingDbContext)
     {
-        throw new NotImplementedException();
     }
-
-    public string GetOtpCode(string cellPhoneNumber)
+    public async Task<string> GetOtpCodeAsync(string cellPhoneNumber)
     {
-        throw new NotImplementedException();
+        User? user= await _accountingDbContext.Users.Include(u=>u.UserToken).SingleOrDefaultAsync
+            (u => u.PhoneNumber.Equals(cellPhoneNumber));
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        return user.UserToken.Token;
     }
 }
