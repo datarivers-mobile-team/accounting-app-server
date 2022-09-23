@@ -4,6 +4,7 @@ using Accounting.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220923084417_added_UserAccount")]
+    partial class added_UserAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +23,6 @@ namespace Accounting.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
-                {
-                    b.Property<int>("AccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"), 1L, 1);
-
-                    b.Property<int>("Color")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Icon")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StartAmount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Accounts");
-                });
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
                 {
@@ -59,9 +35,6 @@ namespace Accounting.DAL.Migrations
                     b.Property<int>("AccessMode")
                         .HasColumnType("int");
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -69,8 +42,6 @@ namespace Accounting.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.HasIndex("UserId");
 
@@ -144,12 +115,6 @@ namespace Accounting.DAL.Migrations
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
                 {
-                    b.HasOne("Accounting.Model.Account.Entities.Account", null)
-                        .WithMany("UserAccounts")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Accounting.Model.Users.Entities.User", null)
                         .WithMany("UserAccounts")
                         .HasForeignKey("UserId")
@@ -166,11 +131,6 @@ namespace Accounting.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
-                {
-                    b.Navigation("UserAccounts");
                 });
 
             modelBuilder.Entity("Accounting.Model.Users.Entities.User", b =>
