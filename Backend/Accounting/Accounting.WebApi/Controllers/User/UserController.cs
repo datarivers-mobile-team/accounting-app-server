@@ -3,7 +3,7 @@ using Accounting.Model.Users.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 
-namespace Accounting.WebApi.Controllers;
+namespace Accounting.WebApi.Controllers.User;
 
 /// <summary>
 /// A class for registration users
@@ -68,17 +68,26 @@ public class UserController : ControllerBase
         return Unauthorized();
     }
 
+    /// <summary>
+    /// Remove a user 
+    /// </summary>
+    /// <param name="userId">remove user with this id</param>
+    /// <returns></returns>
     [Route("remove")]
     [HttpPost]
     public async Task<IActionResult> Remove(int userId)
     {
-        if (!ModelState.IsValid) return BadRequest();   
+        if (!ModelState.IsValid) return BadRequest();
 
         bool isDeleted = await _user.Remove(userId);
 
         return isDeleted == true ? Ok() : NotFound(userId);
     }
 
+    /// <summary>
+    /// Get all system users
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [Route("getUser")]
     public async Task<IActionResult> GetUsers()

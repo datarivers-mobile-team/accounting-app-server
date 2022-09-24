@@ -1,6 +1,9 @@
-﻿namespace Accounting.Model.Users.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Accounting.Model.Users.Dtos;
 public class RegisterDto
 {
+    [Required]
     public string PhoneNumber { get; set; }
 
     public string? FullName { get; set; }

@@ -33,7 +33,10 @@ namespace Accounting.DAL.Migrations
                     b.Property<int>("Color")
                         .HasColumnType("int");
 
-                    b.Property<int>("Icon")
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("IconId")
                         .HasColumnType("int");
 
                     b.Property<int>("StartAmount")
@@ -41,11 +44,46 @@ namespace Accounting.DAL.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("AccountId");
 
+                    b.HasIndex("IconId");
+
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>
+                {
+                    b.Property<int>("IconId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IconId"), 1L, 1);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<byte>("IconType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("Oeder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("IconId");
+
+                    b.ToTable("Icons");
                 });
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
@@ -142,6 +180,13 @@ namespace Accounting.DAL.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
+                {
+                    b.HasOne("Accounting.Model.Icon.Entities.Icon", null)
+                        .WithMany("Accounts")
+                        .HasForeignKey("IconId");
+                });
+
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
                 {
                     b.HasOne("Accounting.Model.Account.Entities.Account", null)
@@ -171,6 +216,11 @@ namespace Accounting.DAL.Migrations
             modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
                 {
                     b.Navigation("UserAccounts");
+                });
+
+            modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 
             modelBuilder.Entity("Accounting.Model.Users.Entities.User", b =>

@@ -5,7 +5,7 @@ public class Account
     public string Title { get; set; }
     public int StartAmount { get; set; }
     public int Color { get; set; }
-    public int Icon { get; set; }
 
     public ICollection<UserAccount.Entities.UserAccount> UserAccounts { get; set; }
+
 }
