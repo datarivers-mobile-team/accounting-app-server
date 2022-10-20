@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    [Migration("20220924203939_init")]
-    partial class init
+    [Migration("20221020213250_Update_AccessMode_UserAccount")]
+    partial class Update_AccessMode_UserAccount
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -32,7 +32,7 @@ namespace Accounting.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"), 1L, 1);
 
-                    b.Property<int>("Color")
+                    b.Property<int?>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -54,9 +54,63 @@ namespace Accounting.DAL.Migrations
 
                     b.HasKey("AccountId");
 
+                    b.HasIndex("ColorId");
+
                     b.HasIndex("IconId");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Accounting.Model.Category.Entities.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<int?>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IconId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("IconId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Accounting.Model.Color.Entities.Color", b =>
+                {
+                    b.Property<int>("ColorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ColorId"), 1L, 1);
+
+                    b.Property<int>("ColorType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ColorId");
+
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>
@@ -96,8 +150,8 @@ namespace Accounting.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AccessMode")
-                        .HasColumnType("int");
+                    b.Property<byte>("AccessMode")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
@@ -115,6 +169,29 @@ namespace Accounting.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserAccounts");
+                });
+
+            modelBuilder.Entity("Accounting.Model.UserContact.Entities.UserContact", b =>
+                {
+                    b.Property<int>("UserContactId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserContactId"), 1L, 1);
+
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserContactId");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("UserContacts");
                 });
 
             modelBuilder.Entity("Accounting.Model.Users.Entities.User", b =>
@@ -184,8 +261,23 @@ namespace Accounting.DAL.Migrations
 
             modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
                 {
+                    b.HasOne("Accounting.Model.Color.Entities.Color", null)
+                        .WithMany("Accounts")
+                        .HasForeignKey("ColorId");
+
                     b.HasOne("Accounting.Model.Icon.Entities.Icon", null)
                         .WithMany("Accounts")
+                        .HasForeignKey("IconId");
+                });
+
+            modelBuilder.Entity("Accounting.Model.Category.Entities.Category", b =>
+                {
+                    b.HasOne("Accounting.Model.Color.Entities.Color", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("ColorId");
+
+                    b.HasOne("Accounting.Model.Icon.Entities.Icon", null)
+                        .WithMany("Categories")
                         .HasForeignKey("IconId");
                 });
 
@@ -204,6 +296,25 @@ namespace Accounting.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Accounting.Model.UserContact.Entities.UserContact", b =>
+                {
+                    b.HasOne("Accounting.Model.Users.Entities.User", "User")
+                        .WithMany("UserOwner")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Model.Users.Entities.User", "UserOwner")
+                        .WithMany("UserContacts")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserOwner");
+                });
+
             modelBuilder.Entity("Accounting.Model.UserToken.Entities.UserToken", b =>
                 {
                     b.HasOne("Accounting.Model.Users.Entities.User", "User")
@@ -220,14 +331,27 @@ namespace Accounting.DAL.Migrations
                     b.Navigation("UserAccounts");
                 });
 
+            modelBuilder.Entity("Accounting.Model.Color.Entities.Color", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Accounting.Model.Users.Entities.User", b =>
                 {
                     b.Navigation("UserAccounts");
+
+                    b.Navigation("UserContacts");
+
+                    b.Navigation("UserOwner");
 
                     b.Navigation("UserToken")
                         .IsRequired();

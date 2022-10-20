@@ -1,4 +1,6 @@
-﻿using Accounting.BLL.Icon.Classes;
+﻿using Accounting.BLL.Account.Classes;
+using Accounting.BLL.Account.Interfaces;
+using Accounting.BLL.Icon.Classes;
 using Accounting.BLL.Icon.Interfaces;
 using Accounting.BLL.Otp.Classes;
 using Accounting.BLL.Otp.Interfaces;
@@ -17,6 +19,7 @@ public static class ApplicationServiceExtensions
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IOtpService, OtpService>();
         services.AddTransient<IIconService, IconService>();
+        services.AddTransient<IAccountService, AccountService>();
 
         return services;
     }

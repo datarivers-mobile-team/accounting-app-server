@@ -4,6 +4,7 @@ using Accounting.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221020210647_added_Order_to_Category")]
+    partial class added_Order_to_Category
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace Accounting.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"), 1L, 1);
 
-                    b.Property<int?>("ColorId")
+                    b.Property<int>("Color")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -51,8 +53,6 @@ namespace Accounting.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("AccountId");
-
-                    b.HasIndex("ColorId");
 
                     b.HasIndex("IconId");
 
@@ -148,8 +148,8 @@ namespace Accounting.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte>("AccessMode")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("AccessMode")
+                        .HasColumnType("int");
 
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
@@ -259,10 +259,6 @@ namespace Accounting.DAL.Migrations
 
             modelBuilder.Entity("Accounting.Model.Account.Entities.Account", b =>
                 {
-                    b.HasOne("Accounting.Model.Color.Entities.Color", null)
-                        .WithMany("Accounts")
-                        .HasForeignKey("ColorId");
-
                     b.HasOne("Accounting.Model.Icon.Entities.Icon", null)
                         .WithMany("Accounts")
                         .HasForeignKey("IconId");
@@ -331,8 +327,6 @@ namespace Accounting.DAL.Migrations
 
             modelBuilder.Entity("Accounting.Model.Color.Entities.Color", b =>
                 {
-                    b.Navigation("Accounts");
-
                     b.Navigation("Categories");
                 });
 

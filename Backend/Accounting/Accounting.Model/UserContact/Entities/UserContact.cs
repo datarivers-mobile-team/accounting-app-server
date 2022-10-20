@@ -1,12 +1,14 @@
 ﻿using Accounting.Model.Users.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Accounting.Model.UserContact.Entities;
 public class UserContact
 {
-    public int Id { get; set; }
+    public int UserContactId { get; set; }
+        
+    public User UserOwner { get; set; }
     public int OwnerId { get; set; }
+
+    public User User { get; set; }
     public int ContactId { get; set; }
-
-    public virtual ICollection<User> Owner { get; set; }
-    public virtual ICollection<User> Contact { get; set; }
-
 }

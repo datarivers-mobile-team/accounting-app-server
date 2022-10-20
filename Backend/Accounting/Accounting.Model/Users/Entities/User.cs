@@ -18,4 +18,8 @@ public class User
     public virtual UserToken.Entities.UserToken UserToken { get; set; }
 
     public ICollection<UserAccount.Entities.UserAccount> UserAccounts { get; set; }
+    public ICollection<UserContact.Entities.UserContact> UserContacts { get; set; }
+
+    public ICollection<UserContact.Entities.UserContact> UserOwner { get; set; }
+
 }

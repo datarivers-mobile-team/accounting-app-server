@@ -12,4 +12,6 @@ public class Icon
     public int Oeder { get; set; }
 
     public ICollection<Account.Entities.Account> Accounts { get; set; }
+
+    public ICollection<Category.Entities.Category> Categories { get; set; }
 }

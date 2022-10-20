@@ -5,10 +5,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Accounting.DAL.Migrations
 {
-    public partial class init : Migration
+    public partial class added_color_category_Usercontact : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Colors",
+                columns: table => new
+                {
+                    ColorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ColorType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colors", x => x.ColorId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Icons",
                 columns: table => new
@@ -67,6 +82,54 @@ namespace Accounting.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ColorId = table.Column<int>(type: "int", nullable: true),
+                    IconId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.ForeignKey(
+                        name: "FK_Categories_Colors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colors",
+                        principalColumn: "ColorId");
+                    table.ForeignKey(
+                        name: "FK_Categories_Icons_IconId",
+                        column: x => x.IconId,
+                        principalTable: "Icons",
+                        principalColumn: "IconId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserContacts",
+                columns: table => new
+                {
+                    UserContactId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    ContactId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserContacts", x => x.UserContactId);
+                    table.ForeignKey(
+                        name: "FK_UserContacts_Users_ContactId",
+                        column: x => x.ContactId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                    table.ForeignKey(
+                        name: "FK_UserContacts_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserTokens",
                 columns: table => new
                 {
@@ -122,6 +185,16 @@ namespace Accounting.DAL.Migrations
                 column: "IconId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_ColorId",
+                table: "Categories",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_IconId",
+                table: "Categories",
+                column: "IconId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAccounts_AccountId",
                 table: "UserAccounts",
                 column: "AccountId");
@@ -130,6 +203,16 @@ namespace Accounting.DAL.Migrations
                 name: "IX_UserAccounts_UserId",
                 table: "UserAccounts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserContacts_ContactId",
+                table: "UserContacts",
+                column: "ContactId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserContacts_OwnerId",
+                table: "UserContacts",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserTokens_UserId",
@@ -141,10 +224,19 @@ namespace Accounting.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "UserAccounts");
 
             migrationBuilder.DropTable(
+                name: "UserContacts");
+
+            migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Colors");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
