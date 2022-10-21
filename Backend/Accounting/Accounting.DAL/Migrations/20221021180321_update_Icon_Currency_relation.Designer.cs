@@ -4,6 +4,7 @@ using Accounting.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221021180321_update_Icon_Currency_relation")]
+    partial class update_Icon_Currency_relation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,22 +139,6 @@ namespace Accounting.DAL.Migrations
                     b.HasIndex("IconId");
 
                     b.ToTable("Currencies");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrencyId = 1,
-                            IconId = 1,
-                            Symbol = "$",
-                            Title = "Dollar"
-                        },
-                        new
-                        {
-                            CurrencyId = 2,
-                            IconId = 2,
-                            Symbol = "€",
-                            Title = "Euro"
-                        });
                 });
 
             modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>
@@ -182,24 +168,6 @@ namespace Accounting.DAL.Migrations
                     b.HasKey("IconId");
 
                     b.ToTable("Icons");
-
-                    b.HasData(
-                        new
-                        {
-                            IconId = 1,
-                            FileName = "",
-                            IconType = (byte)3,
-                            Oeder = 0,
-                            Title = "Dollar"
-                        },
-                        new
-                        {
-                            IconId = 2,
-                            FileName = "",
-                            IconType = (byte)3,
-                            Oeder = 0,
-                            Title = "Euro"
-                        });
                 });
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>

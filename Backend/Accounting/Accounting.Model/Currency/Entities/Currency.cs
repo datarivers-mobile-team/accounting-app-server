@@ -5,5 +5,8 @@ public class Currency
     public string Title { get; set; }
     public string Symbol { get; set; }
 
+    public Icon.Entities.Icon Icon { get; set; }
+    public int IconId { get; set; }
+
     public ICollection<Users.Entities.User> Users { get; set; }
 }

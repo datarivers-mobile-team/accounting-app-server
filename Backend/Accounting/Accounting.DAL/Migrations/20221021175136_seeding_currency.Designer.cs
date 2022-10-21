@@ -4,6 +4,7 @@ using Accounting.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221021175136_seeding_currency")]
+    partial class seeding_currency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,7 +121,7 @@ namespace Accounting.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrencyId"), 1L, 1);
 
-                    b.Property<int>("IconId")
+                    b.Property<int?>("IconId")
                         .HasColumnType("int");
 
                     b.Property<string>("Symbol")
@@ -142,14 +144,12 @@ namespace Accounting.DAL.Migrations
                         new
                         {
                             CurrencyId = 1,
-                            IconId = 1,
                             Symbol = "$",
                             Title = "Dollar"
                         },
                         new
                         {
                             CurrencyId = 2,
-                            IconId = 2,
                             Symbol = "€",
                             Title = "Euro"
                         });
@@ -182,24 +182,6 @@ namespace Accounting.DAL.Migrations
                     b.HasKey("IconId");
 
                     b.ToTable("Icons");
-
-                    b.HasData(
-                        new
-                        {
-                            IconId = 1,
-                            FileName = "",
-                            IconType = (byte)3,
-                            Oeder = 0,
-                            Title = "Dollar"
-                        },
-                        new
-                        {
-                            IconId = 2,
-                            FileName = "",
-                            IconType = (byte)3,
-                            Oeder = 0,
-                            Title = "Euro"
-                        });
                 });
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
@@ -345,13 +327,9 @@ namespace Accounting.DAL.Migrations
 
             modelBuilder.Entity("Accounting.Model.Currency.Entities.Currency", b =>
                 {
-                    b.HasOne("Accounting.Model.Icon.Entities.Icon", "Icon")
+                    b.HasOne("Accounting.Model.Icon.Entities.Icon", null)
                         .WithMany("Currencies")
-                        .HasForeignKey("IconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Icon");
+                        .HasForeignKey("IconId");
                 });
 
             modelBuilder.Entity("Accounting.Model.UserAccount.Entities.UserAccount", b =>
