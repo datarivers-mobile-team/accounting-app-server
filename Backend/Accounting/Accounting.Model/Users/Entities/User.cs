@@ -9,13 +9,14 @@ public class User
 
     public string? RefCode { get; set; }
 
-    public int? PreferredCurrency { get; set; }
-
     public DateTime CreatedAt { get; set; }
 
     public bool? Isdeleted { get; set; }
 
-    public virtual UserToken.Entities.UserToken UserToken { get; set; }
+    public Currency.Entities.Currency Currency { get; set; }
+    public int CurrencyId { get; set; }
+
+    public UserToken.Entities.UserToken UserToken { get; set; }
 
     public ICollection<UserAccount.Entities.UserAccount> UserAccounts { get; set; }
     public ICollection<UserContact.Entities.UserContact> UserContacts { get; set; }

@@ -14,4 +14,6 @@ public class Icon
     public ICollection<Account.Entities.Account> Accounts { get; set; }
 
     public ICollection<Category.Entities.Category> Categories { get; set; }
+
+    public ICollection<Currency.Entities.Currency> Currencies { get; set; }
 }

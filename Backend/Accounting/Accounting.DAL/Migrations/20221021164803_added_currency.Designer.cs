@@ -4,6 +4,7 @@ using Accounting.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounting.DAL.Migrations
 {
     [DbContext(typeof(AccountingDbContext))]
-    partial class AccountingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221021164803_added_currency")]
+    partial class added_currency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,13 +126,11 @@ namespace Accounting.DAL.Migrations
 
                     b.Property<string>("Symbol")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CurrencyId");
 
@@ -231,9 +231,6 @@ namespace Accounting.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CurrencyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FullName")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -246,13 +243,14 @@ namespace Accounting.DAL.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<int?>("PreferredCurrency")
+                        .HasColumnType("int");
+
                     b.Property<string>("RefCode")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("CurrencyId");
 
                     b.ToTable("Users");
                 });
@@ -350,17 +348,6 @@ namespace Accounting.DAL.Migrations
                     b.Navigation("UserOwner");
                 });
 
-            modelBuilder.Entity("Accounting.Model.Users.Entities.User", b =>
-                {
-                    b.HasOne("Accounting.Model.Currency.Entities.Currency", "Currency")
-                        .WithMany("Users")
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Currency");
-                });
-
             modelBuilder.Entity("Accounting.Model.UserToken.Entities.UserToken", b =>
                 {
                     b.HasOne("Accounting.Model.Users.Entities.User", "User")
@@ -382,11 +369,6 @@ namespace Accounting.DAL.Migrations
                     b.Navigation("Accounts");
 
                     b.Navigation("Categories");
-                });
-
-            modelBuilder.Entity("Accounting.Model.Currency.Entities.Currency", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Accounting.Model.Icon.Entities.Icon", b =>

@@ -22,6 +22,7 @@ public class AccountingDbContext : DbContext
     public DbSet<Model.UserContact.Entities.UserContact> UserContacts { get; set; }
     public DbSet<Model.Color.Entities.Color> Colors { get; set; }
     public DbSet<Model.Category.Entities.Category> Categories { get; set; }
+    public DbSet<Model.Currency.Entities.Currency> Currencies { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

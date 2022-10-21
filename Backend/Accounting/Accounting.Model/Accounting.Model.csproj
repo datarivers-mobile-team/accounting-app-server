@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Category\Dtos\" />
     <Folder Include="Color\Dtos\" />
+    <Folder Include="Currency\Dtos\" />
   </ItemGroup>
 
   <ItemGroup>

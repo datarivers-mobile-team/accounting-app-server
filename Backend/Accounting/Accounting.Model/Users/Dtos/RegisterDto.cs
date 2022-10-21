@@ -9,6 +9,4 @@ public class RegisterDto
     public string? FullName { get; set; }
 
     public string? RefCode { get; set; }
-
-    public int? PreferredCurrency { get; set; }
 }

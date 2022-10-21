@@ -21,7 +21,6 @@ public class UserService : BaseApplicationService, IUserService
         {
             FullName = register.FullName,
             PhoneNumber = register.PhoneNumber,
-            PreferredCurrency = register.PreferredCurrency,
             RefCode = register.RefCode,
             CreatedAt = now,
             Isdeleted = false,
