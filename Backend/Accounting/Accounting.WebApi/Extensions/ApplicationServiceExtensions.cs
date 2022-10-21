@@ -2,6 +2,8 @@
 using Accounting.BLL.Account.Interfaces;
 using Accounting.BLL.Color.Classes;
 using Accounting.BLL.Color.Interfaces;
+using Accounting.BLL.Currency.Classes;
+using Accounting.BLL.Currency.Interfaces;
 using Accounting.BLL.Icon.Classes;
 using Accounting.BLL.Icon.Interfaces;
 using Accounting.BLL.Otp.Classes;
@@ -9,7 +11,6 @@ using Accounting.BLL.Otp.Interfaces;
 using Accounting.BLL.Users.Classes;
 using Accounting.BLL.Users.Interfaces;
 using Accounting.DAL.DataContext;
-using Accounting.Model.Framework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Accounting.WebApi.Extensions;
@@ -24,6 +25,7 @@ public static class ApplicationServiceExtensions
         services.AddTransient<IIconService, IconService>();
         services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<IColorService, ColorService>();
+        services.AddTransient<ICurrencyService, CurrencyService>();
        
         return services;
     }
