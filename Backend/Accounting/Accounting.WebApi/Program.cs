@@ -1,3 +1,4 @@
+using Accounting.Model.Framework;
 using Accounting.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddApplicationServices(builder.Configuration);
 var app = builder.Build();
 

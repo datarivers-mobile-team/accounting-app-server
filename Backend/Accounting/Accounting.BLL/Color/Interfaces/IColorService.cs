@@ -7,7 +7,7 @@ public interface IColorService
 
     Task<bool> UpdateColorAsync(ColorDto colorDto);
 
-    Task<IReadOnlyList<ColorDto>> GetIconsAsync();
+    Task<IReadOnlyList<ColorDto>> GetColorAsync();
 
     Task<bool> RemoveColorAsync(int colorId);
 }

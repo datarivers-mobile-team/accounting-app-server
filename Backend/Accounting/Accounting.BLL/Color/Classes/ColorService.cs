@@ -10,7 +10,8 @@ public class ColorService : BaseApplicationService, IColorService
 {
     private readonly IMapper _mapper;
 
-    public ColorService(AccountingDbContext accountingDbContext, IMapper mapper) : base(accountingDbContext)
+    public ColorService(AccountingDbContext accountingDbContext, IMapper mapper) 
+        : base(accountingDbContext)
     {
         _mapper = mapper;
     }
@@ -25,7 +26,7 @@ public class ColorService : BaseApplicationService, IColorService
         return colorDto;
     }
 
-    public async Task<IReadOnlyList<ColorDto>> GetIconsAsync()
+    public async Task<IReadOnlyList<ColorDto>> GetColorAsync()
     {
         List<Model.Color.Entities.Color> colors = await _accountingDbContext.Colors.AsNoTracking().ToListAsync();
 
@@ -65,8 +66,8 @@ public class ColorService : BaseApplicationService, IColorService
         Model.Color.Entities.Color? color = await _accountingDbContext.Colors.FindAsync(colorDto.ColorId);
         if (color != null)
         {
-            Model.Color.Entities.Color updatedColor = _mapper.Map<Model.Color.Entities.Color>(colorDto);
-            _accountingDbContext.Colors.Update(updatedColor);
+            color = UpdateColor(color,colorDto);
+            _accountingDbContext.Colors.Update(color);
             await _accountingDbContext.SaveChangesAsync();
 
             return true;
@@ -76,8 +77,9 @@ public class ColorService : BaseApplicationService, IColorService
             Model.Color.Entities.Color? color2 = await _accountingDbContext.Colors.FirstOrDefaultAsync(c => c.ColorId == colorDto.ColorId);
             if (color2 != null)
             {
-                Model.Color.Entities.Color updatedColor = _mapper.Map<Model.Color.Entities.Color>(colorDto);
-                _accountingDbContext.Colors.Update(updatedColor);
+                color2 = UpdateColor(color2,colorDto);
+
+                _accountingDbContext.Colors.Update(color2);
                 await _accountingDbContext.SaveChangesAsync();
 
                 return true;
@@ -88,4 +90,13 @@ public class ColorService : BaseApplicationService, IColorService
             }
         }
     }
-}
+
+    private Model.Color.Entities.Color UpdateColor(Model.Color.Entities.Color color,ColorDto colorDto)
+    {
+        color.Title = colorDto.Title;
+        color.Value = colorDto.Value;
+        color.ColorType = colorDto.ColorType;
+
+        return color;
+    }
+ }
